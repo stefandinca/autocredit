@@ -228,49 +228,108 @@
     </footer>
 
     <script>
-        const cars = [
-            { id: 1, make: "BMW", model: "Seria 3 320d", year: 2019, price: 24500, mileage: 145000, fuel: "Diesel", image: "https://images.unsplash.com/photo-1555215695-3004980adade?auto=format&fit=crop&w=800&q=80" },
-            { id: 2, make: "Volkswagen", model: "Passat B8", year: 2020, price: 19900, mileage: 112000, fuel: "Diesel", image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80" },
-            { id: 3, make: "Audi", model: "A6 50 TDI", year: 2018, price: 38500, mileage: 98000, fuel: "Hybrid", image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80" },
-            { id: 4, make: "Mercedes", model: "C-Class", year: 2017, price: 22000, mileage: 165000, fuel: "Diesel", image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80" }
-        ];
+        /**
+         * Load and display latest cars from API
+         */
+        async function loadLatestCars() {
+            const container = document.getElementById('latest-cars');
+            const formatMoney = (n) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
+            const formatKm = (n) => new Intl.NumberFormat('de-DE').format(n);
 
-        const container = document.getElementById('latest-cars');
-        const formatMoney = (n) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
-        const formatKm = (n) => new Intl.NumberFormat('de-DE').format(n);
-
-        container.innerHTML = cars.slice(0, 4).map(car => `
-            <a href="car-detail.html?id=${car.id}" class="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-primary-600 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div class="relative h-56 overflow-hidden bg-gray-100">
-                    <img src="${car.image}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    <div class="absolute top-4 right-4 bg-accent-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg">
-                        Premium
-                    </div>
+            // Show loading state
+            container.innerHTML = `
+                <div class="col-span-full flex justify-center items-center py-16">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-500"></div>
                 </div>
-                <div class="p-6">
-                    <div class="text-xs font-bold text-accent-500 uppercase tracking-wider mb-1">${car.make}</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition">${car.model}</h3>
-                    <div class="flex items-center text-sm text-gray-500 space-x-3 mb-4">
-                        <span class="flex items-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                            ${car.year}
-                        </span>
-                        <span class="text-gray-300">•</span>
-                        <span class="flex items-center">
-                            <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            ${car.fuel}
-                        </span>
-                    </div>
-                    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                        <div class="text-2xl font-black text-gray-900">${formatMoney(car.price)}</div>
-                        <div class="text-primary-600 font-semibold group-hover:translate-x-1 transition flex items-center space-x-1">
-                            <span class="text-sm">Detalii</span>
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            `;
+
+            try {
+                // Fetch cars from API
+                const response = await fetch('api.php');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const allCars = await response.json();
+
+                // Get the latest 4 cars (highest IDs = most recently added)
+                const latestCars = allCars
+                    .sort((a, b) => b.id - a.id)
+                    .slice(0, 4);
+
+                if (latestCars.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-span-full text-center py-16">
+                            <p class="text-xl text-gray-500">Nu există mașini disponibile momentan</p>
                         </div>
+                    `;
+                    return;
+                }
+
+                // Render cars
+                container.innerHTML = latestCars.map(car => `
+                    <a href="car-detail.html?id=${car.id}" class="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-primary-600 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                        <div class="relative h-56 overflow-hidden bg-gray-100">
+                            <img src="${car.image}"
+                                 alt="${car.make} ${car.model}"
+                                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                                 loading="lazy"
+                                 onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'">
+                            ${car.verified ? `
+                                <div class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg">
+                                    Verificat
+                                </div>
+                            ` : `
+                                <div class="absolute top-4 right-4 bg-accent-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg">
+                                    Premium
+                                </div>
+                            `}
+                        </div>
+                        <div class="p-6">
+                            <div class="text-xs font-bold text-accent-500 uppercase tracking-wider mb-1">${car.make}</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition">${car.model}</h3>
+                            <div class="flex items-center text-sm text-gray-500 space-x-3 mb-4">
+                                <span class="flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                    ${car.year}
+                                </span>
+                                <span class="text-gray-300">•</span>
+                                <span class="flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                    ${car.fuel}
+                                </span>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                                <div class="text-2xl font-black text-gray-900">${formatMoney(car.price)}</div>
+                                <div class="text-primary-600 font-semibold group-hover:translate-x-1 transition flex items-center space-x-1">
+                                    <span class="text-sm">Detalii</span>
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading cars:', error);
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-16">
+                        <svg class="w-16 h-16 text-red-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <p class="text-xl font-semibold text-gray-600 mb-2">Eroare la încărcarea mașinilor</p>
+                        <p class="text-gray-500">Vă rugăm să reîncărcați pagina</p>
                     </div>
-                </div>
-            </a>
-        `).join('');
+                `;
+            }
+        }
+
+        // Load cars when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadLatestCars);
+        } else {
+            loadLatestCars();
+        }
     </script>
 </body>
 </html>

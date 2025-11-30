@@ -530,7 +530,7 @@ async function loadCarData() {
         }
 
         // Load cars data
-        const response = await fetch('data/cars.json');
+        const response = await fetch('api.php');
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

@@ -1,0 +1,7 @@
+# Deny direct access to JSON files
+# Users should access data only through api.php
+
+<Files "*.json">
+    Order Allow,Deny
+    Deny from all
+</Files>

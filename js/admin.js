@@ -6,7 +6,7 @@
 // Global State
 let carsData = [];
 let editingCarId = null;
-const STORAGE_KEY = 'autocredit_cars_data';
+const API_URL = 'api.php';
 
 // Utility Functions
 const formatMoney = (amount) => {
@@ -70,28 +70,18 @@ function showAlert(message, type = 'success') {
 }
 
 /**
- * Load cars from localStorage or fetch from JSON
+ * Load cars from the server
  */
 async function loadCars() {
     try {
-        // First, try to load from localStorage
-        const storedData = localStorage.getItem(STORAGE_KEY);
+        const response = await fetch(API_URL);
 
-        if (storedData) {
-            carsData = JSON.parse(storedData);
-            console.log('Loaded cars from localStorage');
-        } else {
-            // If no localStorage data, fetch from JSON file
-            const response = await fetch('data/cars.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            carsData = await response.json();
-            // Save to localStorage
-            saveCarsToStorage();
-            console.log('Loaded cars from JSON file');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
+        carsData = await response.json();
+        console.log(`Loaded ${carsData.length} cars from server`);
         renderCarsList();
     } catch (error) {
         console.error('Error loading cars:', error);
@@ -102,11 +92,30 @@ async function loadCars() {
 }
 
 /**
- * Save cars to localStorage
+ * Save cars to the server (writes to cars.json file)
  */
-function saveCarsToStorage() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(carsData));
-    console.log('Saved cars to localStorage');
+async function saveCarsToServer() {
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(carsData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Saved cars to server:', result);
+        return true;
+    } catch (error) {
+        console.error('Error saving cars:', error);
+        showAlert('Error saving cars data. Please check the console.', 'error');
+        return false;
+    }
 }
 
 /**
@@ -278,7 +287,7 @@ function closeCarModal() {
  * Delete car
  * @param {number} carId - ID of car to delete
  */
-function deleteCar(carId) {
+async function deleteCar(carId) {
     const car = carsData.find(c => c.id === carId);
     if (!car) {
         showAlert('Car not found!', 'error');
@@ -287,16 +296,18 @@ function deleteCar(carId) {
 
     if (confirm(`Are you sure you want to delete ${car.make} ${car.model}?`)) {
         carsData = carsData.filter(c => c.id !== carId);
-        saveCarsToStorage();
-        renderCarsList();
-        showAlert(`${car.make} ${car.model} deleted successfully!`, 'success');
+        const saved = await saveCarsToServer();
+        if (saved) {
+            renderCarsList();
+            showAlert(`${car.make} ${car.model} deleted successfully!`, 'success');
+        }
     }
 }
 
 /**
  * Handle form submission
  */
-document.getElementById('car-form').addEventListener('submit', function(e) {
+document.getElementById('car-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     // Get form values
@@ -343,19 +354,21 @@ document.getElementById('car-form').addEventListener('submit', function(e) {
         if (index !== -1) {
             carData.id = editingCarId;
             carsData[index] = carData;
-            showAlert(`${carData.make} ${carData.model} updated successfully!`, 'success');
         }
     } else {
         // Add new car
         carData.id = generateNewId();
         carsData.push(carData);
-        showAlert(`${carData.make} ${carData.model} added successfully!`, 'success');
     }
 
     // Save and refresh
-    saveCarsToStorage();
-    renderCarsList();
-    closeCarModal();
+    const saved = await saveCarsToServer();
+    if (saved) {
+        renderCarsList();
+        closeCarModal();
+        const action = editingCarId !== null ? 'updated' : 'added';
+        showAlert(`${carData.make} ${carData.model} ${action} successfully!`, 'success');
+    }
 });
 
 /**
@@ -386,7 +399,7 @@ function importJSON(event) {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
         try {
             const importedData = JSON.parse(e.target.result);
 
@@ -405,9 +418,11 @@ function importJSON(event) {
             // Ask for confirmation
             if (confirm(`Import ${importedData.length} cars? This will replace the current data.`)) {
                 carsData = importedData;
-                saveCarsToStorage();
-                renderCarsList();
-                showAlert(`Successfully imported ${importedData.length} cars!`, 'success');
+                const saved = await saveCarsToServer();
+                if (saved) {
+                    renderCarsList();
+                    showAlert(`Successfully imported ${importedData.length} cars!`, 'success');
+                }
             }
         } catch (error) {
             console.error('Import error:', error);

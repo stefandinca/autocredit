@@ -135,13 +135,13 @@ function applySorting(sortOrder) {
 }
 
 /**
- * Load car data from JSON file
+ * Load car data from API
  */
 async function loadCarsData() {
     try {
         grid.classList.add('loading');
 
-        const response = await fetch('data/cars.json');
+        const response = await fetch('api.php');
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

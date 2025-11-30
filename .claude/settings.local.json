@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:www.tiriacauto.ro)"
+      "WebFetch(domain:www.tiriacauto.ro)",
+      "Bash(npm install:*)",
+      "Bash(npm start)",
+      "Bash(curl:*)",
+      "Bash(php:*)",
+      "Bash(timeout 2 bash -c \"sleep 1 && curl -s http://localhost:8000/api.php?action=health\":*)"
     ],
     "deny": [],
     "ask": []
