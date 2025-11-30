@@ -1,3 +1,10 @@
+<?php
+/**
+ * Admin Panel - Requires Authentication
+ */
+require_once 'auth-config.php';
+requireAuth(); // Redirect to login if not authenticated
+?>
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -34,6 +41,9 @@
                     <span class="text-xl font-black tracking-tight">AUTO<span class="text-accent-500">CREDIT</span> <span class="text-xs bg-red-500 text-white px-2 py-1 rounded">ADMIN</span></span>
                 </a>
                 <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-600 hidden md:block">
+                        Conectat: <strong><?php echo htmlspecialchars($_SESSION['admin_username']); ?></strong>
+                    </span>
                     <button onclick="exportJSON()" class="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-medium text-sm">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                         <span>Export JSON</span>
@@ -46,6 +56,10 @@
                     <a href="parc-auto.html" class="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition font-medium text-sm">
                         <span>View Site</span>
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                    <a href="logout.php" class="flex items-center space-x-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition font-medium text-sm">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                        <span>Logout</span>
                     </a>
                 </div>
             </div>
