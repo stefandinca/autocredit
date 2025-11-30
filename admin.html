@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Autocredit Romania</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: { 50: '#f0f4ff', 100: '#d9e2ff', 200: '#b4c7ff', 300: '#8ea8ff', 400: '#6788ff', 500: '#4169ff', 600: '#0A1128', 700: '#080d1f', 800: '#060916', 900: '#03040b' },
+                        accent: { 50: '#fff4ed', 100: '#ffe6d5', 200: '#fec9aa', 300: '#fea574', 400: '#fe7a3c', 500: '#FF6B35', 600: '#f24d16', 700: '#c73b0c', 800: '#9e3112', 900: '#7f2b12' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="glass-nav fixed w-full z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex items-center space-x-2 group">
+                    <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center group-hover:bg-accent-500 transition duration-300">
+                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    </div>
+                    <span class="text-xl font-black tracking-tight">AUTO<span class="text-accent-500">CREDIT</span> <span class="text-xs bg-red-500 text-white px-2 py-1 rounded">ADMIN</span></span>
+                </a>
+                <div class="flex items-center space-x-4">
+                    <button onclick="exportJSON()" class="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition font-medium text-sm">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        <span>Export JSON</span>
+                    </button>
+                    <button onclick="document.getElementById('import-file').click()" class="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-medium text-sm">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                        <span>Import JSON</span>
+                    </button>
+                    <input type="file" id="import-file" accept=".json" class="hidden" onchange="importJSON(event)">
+                    <a href="parc-auto.html" class="flex items-center space-x-2 text-gray-600 hover:text-primary-600 transition font-medium text-sm">
+                        <span>View Site</span>
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-4xl font-black text-gray-900">Car Management</h1>
+                <p class="text-gray-600 mt-2">Manage your car inventory - Add, Edit, or Delete cars</p>
+            </div>
+            <button onclick="openAddCarModal()" class="flex items-center space-x-2 bg-accent-500 text-white px-6 py-3 rounded-xl hover:bg-accent-600 transition font-bold shadow-lg shadow-accent-500/30">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" /></svg>
+                <span>Add New Car</span>
+            </button>
+        </div>
+
+        <!-- Alert Messages -->
+        <div id="alert-container" class="mb-6"></div>
+
+        <!-- Cars List -->
+        <div id="cars-list" class="space-y-4">
+            <!-- Cars will be loaded here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-20">
+            <svg class="w-24 h-24 text-gray-300 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+            </svg>
+            <h3 class="text-2xl font-bold text-gray-400 mb-2">No Cars Found</h3>
+            <p class="text-gray-500">Add your first car to get started</p>
+        </div>
+    </main>
+
+    <!-- Add/Edit Car Modal -->
+    <div id="car-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full my-8">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <h2 id="modal-title" class="text-2xl font-black text-gray-900">Add New Car</h2>
+                <button onclick="closeCarModal()" class="text-gray-400 hover:text-gray-600 transition">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <form id="car-form" class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Basic Info -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Make (Marca)</label>
+                        <input type="text" id="input-make" required class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Model</label>
+                        <input type="text" id="input-model" required class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Year (An)</label>
+                        <input type="number" id="input-year" required min="1990" max="2030" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Price (Preț) €</label>
+                        <input type="number" id="input-price" required min="0" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Mileage (Km Parcurși)</label>
+                        <input type="number" id="input-mileage" required min="0" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Fuel (Combustibil)</label>
+                        <input type="text" id="input-fuel" required placeholder="e.g., Diesel, Benzină" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Transmission (Cutie de Viteze)</label>
+                        <input type="text" id="input-transmission" placeholder="e.g., Manuală, Automată DSG" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Body Type (Tip Caroserie)</label>
+                        <input type="text" id="input-body-type" placeholder="e.g., Berlină, SUV, Combi" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Displacement (Capacitate Cilindrică)</label>
+                        <input type="text" id="input-displacement" placeholder="e.g., 2000 cm³" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Power (Putere)</label>
+                        <input type="text" id="input-power" placeholder="e.g., 150 CP" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Main Image URL</label>
+                        <input type="text" id="input-image" required placeholder="./img/car.webp or https://..." class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Description (Descriere)</label>
+                        <textarea id="input-description" rows="4" placeholder="Enter car description..." class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition resize-none"></textarea>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Images URLs (one per line)</label>
+                        <textarea id="input-images" rows="6" placeholder="./img/car-1.webp&#10;./img/car-2.webp&#10;./img/car-3.webp" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition resize-none font-mono text-sm"></textarea>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Exterior Features (one per line)</label>
+                        <textarea id="input-exterior" rows="6" placeholder="Jante Aluminiu 18&quot;&#10;Faruri LED&#10;Senzori Parcare" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition resize-none"></textarea>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Interior Features (one per line)</label>
+                        <textarea id="input-interior" rows="6" placeholder="Scaune Piele&#10;Climatizare Automată&#10;Apple CarPlay" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none transition resize-none"></textarea>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" id="input-verified" class="w-5 h-5 text-primary-600 rounded focus:ring-primary-500">
+                            <span class="text-sm font-bold text-gray-700">Verified (Verificat)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end space-x-4">
+                    <button type="button" onclick="closeCarModal()" class="px-6 py-3 border-2 border-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-6 py-3 bg-accent-500 text-white font-bold rounded-lg hover:bg-accent-600 transition shadow-lg shadow-accent-500/30">
+                        Save Car
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

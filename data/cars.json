@@ -1,0 +1,273 @@
+[
+    {
+        "id": 1,
+        "make": "Skoda",
+        "model": "Octavia",
+        "year": 2018,
+        "price": 10800,
+        "mileage": 174000,
+        "fuel": "Diesel",
+        "transmission": "Automată DSG",
+        "bodyType": "Combi",
+        "displacement": "1598 cm³",
+        "power": "115 CP",
+        "description": "Combi 2018, cu istoric verificat, întreținere conform standardelor producătorului și documente complete. Mașina este înmatriculată, cu dotări moderne pentru confort și siguranță, ideală pentru familie sau navetă. O alegere echilibrată pentru cei care caută fiabilitate, spațiu și funcționalitate într-un pachet atractiv.",
+        "image": "./img/skoda-octavia-0.webp",
+        "images": [
+            "./img/skoda-octavia-0.webp",
+            "./img/skoda-octavia-1.webp",
+            "./img/skoda-octavia-2.webp",
+            "./img/skoda-octavia-3.webp",
+            "./img/skoda-octavia-4.webp",
+            "./img/skoda-octavia-5.webp",
+            "./img/skoda-octavia-6.webp",
+            "./img/skoda-octavia-7.webp",
+            "./img/skoda-octavia-8.webp",
+            "./img/skoda-octavia-9.webp",
+            "./img/skoda-octavia-10.webp",
+            "./img/skoda-octavia-11.webp",
+            "./img/skoda-octavia-12.webp",
+            "./img/skoda-octavia-13.webp",
+            "./img/skoda-octavia-14.webp",
+            "./img/skoda-octavia-15.webp",
+            "./img/skoda-octavia-16.webp",
+            "./img/skoda-octavia-17.webp",
+            "./img/skoda-octavia-18.webp",
+            "./img/skoda-octavia-19.webp",
+            "./img/skoda-octavia-20.webp",
+            "./img/skoda-octavia-21.webp",
+            "./img/skoda-octavia-22.webp",
+            "./img/skoda-octavia-23.webp",
+            "./img/skoda-octavia-24.webp",
+            "./img/skoda-octavia-25.webp",
+            "./img/skoda-octavia-26.webp",
+            "./img/skoda-octavia-27.webp"
+            
+        ],
+        "verified": true,
+        "features": {
+            "exterior": [
+                "Culoare: Gri",
+                "Pilot automat",
+                "Senzori Parcare Față/Spate",
+                "Oglinzi Electrice Încălzite",
+                "Limitator Viteză",
+                "Asistenta la Frânare",
+                "Asistenta in rampa",
+                "Lumini de zi",
+                "Faruri ceață",
+                "Faruri directioanle",
+                "Sistem Start-Stop",
+                "Senzori presiune anvelope",
+                "Servodirecție"
+            ],
+            "interior": [
+                "Apple CarPlay/Android Auto",
+                "Bluetooth",
+                "Radio",
+                "Sistem hands-free",
+                "Port USB",
+                "Wireless charging",
+                "Sistem navigație",
+                "Monitor touchscreen",
+                "Climatronic 2 zone",
+                "Tapiterie Stofa",
+                "Cotiera fata-spate",
+                "Volan sport, piele",
+                "Volan multifunctional",
+                "Senzori ploaie",
+                "Geamuri electrice fata-spate"
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "make": "Volkswagen",
+        "model": "Passat B8 Highline",
+        "year": 2020,
+        "price": 19900,
+        "mileage": 112000,
+        "fuel": "Diesel",
+        "transmission": "Automată DSG",
+        "bodyType": "Berlină",
+        "displacement": "2000 cm³",
+        "power": "190 CP",
+        "description": "Volkswagen Passat B8 Highline - un sedan premium care combină eleganța cu performanța. Echipat cu transmisie automată DSG pentru o experiență de condus superioară și motor diesel puternic de 190 CP. Interiorul luxos cu dotări premium oferă confort maxim. Ideal pentru cei care apreciază calitatea germană și tehnologia avansată.",
+        "image": "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "features": {
+            "exterior": [
+                "Jante Aluminiu 17\"",
+                "Faruri LED cu DRL",
+                "Senzori Parcare Spate",
+                "Geamuri Fumurii",
+                "Bare Cromate"
+            ],
+            "interior": [
+                "Tapițerie Piele/Alcantara",
+                "Climatizare Automată Duală",
+                "Sistem Infotainment",
+                "Scaune Încălzite Față",
+                "Volan Încălzit"
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "make": "Audi",
+        "model": "A6 50 TDI Quattro",
+        "year": 2018,
+        "price": 38500,
+        "mileage": 98000,
+        "fuel": "Hybrid/Diesel",
+        "transmission": "Automată Tiptronic",
+        "bodyType": "Berlină",
+        "displacement": "3000 cm³",
+        "power": "286 CP",
+        "description": "Audi A6 50 TDI Quattro - un automobil premium de top cu tracțiune integrală Quattro. Motorul V6 de 3.0 litri oferă performanțe excepționale de 286 CP, combinate cu tehnologia mild-hybrid pentru eficiență sporită. Dotări de ultimă generație includ Matrix LED, Virtual Cockpit Plus și sistem audio Bang & Olufsen. Luxul german la cel mai înalt nivel.",
+        "image": "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1616422285623-13ff0162193c?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1610768764270-790fbec18178?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "features": {
+            "exterior": [
+                "Jante Aluminiu 19\" S-Line",
+                "Matrix LED",
+                "Camere 360°",
+                "Trapă Panoramică",
+                "Suspensie Pneumatică"
+            ],
+            "interior": [
+                "Interior Piele Nappa",
+                "Climatizare Automată 4 Zone",
+                "Virtual Cockpit Plus",
+                "Sistem Audio Bang & Olufsen",
+                "Masaj Scaune Față"
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "make": "Mercedes-Benz",
+        "model": "C-Class C220d",
+        "year": 2017,
+        "price": 22000,
+        "mileage": 165000,
+        "fuel": "Diesel",
+        "transmission": "Automată 9G-Tronic",
+        "bodyType": "Berlină",
+        "displacement": "2143 cm³",
+        "power": "170 CP",
+        "description": "Mercedes-Benz C-Class C220d - eleganță și rafinament în stil german. Echipat cu transmisie automată 9G-Tronic cu 9 trepte pentru confort maxim și consum redus. Pachet AMG exterior conferă un look sportiv și elegant. Sistem audio Burmester și scaune sport MB-Tex asigură o experiență premium. Perfectă pentru cei care doresc lux accesibil.",
+        "image": "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1609521263047-f8f205293f24?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "features": {
+            "exterior": [
+                "Jante Aluminiu AMG 18\"",
+                "Faruri LED Multibeam",
+                "Senzori Parcare + Cameră",
+                "Pachet Sport Exterior",
+                "Oglinzi Rabatabile Electric"
+            ],
+            "interior": [
+                "Scaune Sport MB-Tex",
+                "Climatizare Thermatic",
+                "COMAND Online Navigation",
+                "Burmester Surround Sound",
+                "Volan Sport AMG"
+            ]
+        }
+    },
+    {
+        "id": 5,
+        "make": "Hyundai",
+        "model": "Tucson Premium",
+        "year": 2021,
+        "price": 26500,
+        "mileage": 45000,
+        "fuel": "Benzină",
+        "transmission": "Automată",
+        "bodyType": "SUV",
+        "displacement": "1598 cm³",
+        "power": "150 CP",
+        "description": "Hyundai Tucson Premium - SUV modern și spațios cu design futurist și tehnologie avansată. Echipat cu wireless CarPlay/Android Auto și display digital de 10.25 inch pentru conectivitate maximă. Rulaj redus de doar 45,000 km și garanție producător încă activă. Ideal pentru familii active care caută un SUV practic, eficient și cu dotări bogate.",
+        "image": "https://images.unsplash.com/photo-1582234327532-67b1473262db?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1582234327532-67b1473262db?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1629897048514-3dd7414fe72a?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "features": {
+            "exterior": [
+                "Jante Aluminiu 19\"",
+                "Faruri LED Cascadă",
+                "Senzori Parcare 360°",
+                "Bare Protecție Cromate",
+                "Eleron Posterior"
+            ],
+            "interior": [
+                "Scaune Piele Ecologică",
+                "Climatizare Automată Bizonă",
+                "Wireless CarPlay/Android Auto",
+                "Încărcător Wireless",
+                "Display Digital 10.25\""
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "make": "Skoda",
+        "model": "Octavia VRS",
+        "year": 2019,
+        "price": 21500,
+        "mileage": 125000,
+        "fuel": "Benzină",
+        "transmission": "Automată DSG",
+        "bodyType": "Combi",
+        "displacement": "2000 cm³",
+        "power": "245 CP",
+        "description": "Skoda Octavia VRS - versiunea sportivă a renumitei Octavia, perfectă pentru pasionații de performanță. Motor turbo de 245 CP combinat cu transmisia DSG pentru accelerații rapide. Scaune sport Alcantara, sistem evacuare sport dual și frâne perforate pentru o experiență de condus sportivă. Design agresiv VRS și pedalier aluminiu sport completează pachetul performant.",
+        "image": "https://images.unsplash.com/photo-1549488344-c73e72f10b7b?auto=format&fit=crop&w=800&q=80",
+        "images": [
+            "https://images.unsplash.com/photo-1549488344-c73e72f10b7b?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1597404294360-656d7f57a19b?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "features": {
+            "exterior": [
+                "Jante Aluminiu VRS 19\"",
+                "Faruri Full LED",
+                "Senzori Parcare + Asistent",
+                "Frâne Sport Perforate",
+                "Sistem Evacuare Sport Dual"
+            ],
+            "interior": [
+                "Scaune Sport Alcantara",
+                "Climatizare Automată 3-Zone",
+                "Infotainment Amundsen",
+                "Volan Sport Perforat",
+                "Pedalier Aluminiu Sport"
+            ]
+        }
+    }
+]
